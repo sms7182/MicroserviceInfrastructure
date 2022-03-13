@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FatalError.Communication.Contracts\FatalError.Communication.Contracts.csproj" />
+    <ProjectReference Include="..\FatalError.Communication.Domain\FatalError.Communication.Domain.csproj" />
+    <ProjectReference Include="..\FatalError.Core.ApplicationService\FatalError.Core.ApplicationService.csproj" />
+    <ProjectReference Include="..\FatalError.Core.CAP\FatalError.Core.CAP.csproj" />
+    <ProjectReference Include="..\FatalError.Core.Contracts\FatalError.Core.Contracts.csproj" />
+  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="MediatR" Version="9.0.0" />
+		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+
+	</ItemGroup>
+
+</Project>

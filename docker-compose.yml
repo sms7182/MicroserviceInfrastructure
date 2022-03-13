@@ -1,0 +1,72 @@
+version: '3.4'
+services:
+    
+    fatalerrorredis:
+       image: redis
+       container_name: fatalerrorredis
+       ports:
+        - 6379:6379
+       environment:
+          ALLOW_EMPTY_PASSWORD: "yes"
+          ASPNETCORE_ENVIRONMENT: Production
+       volumes:
+        - ./redis.conf:/tmp/redis.conf
+      
+       #command: ["redis-server", "--bind", "redis", "--port", "6379"]
+       command: redis-server --appendonly yes
+       #command: ["redis-server","/tmp/redis.conf"] 
+
+    fatalerrordb:
+       image: mongo
+       container_name: fatalerrordb
+       ports:
+        - 27017:27017
+       restart: always
+       environment:
+        MONGO_INITDB_ROOT_USERNAME: root
+        MONGO_INITDB_ROOT_PASSWORD: example
+        ASPNETCORE_ENVIRONMENT: Production
+
+    fatalerrorsqldb:
+        image: postgres
+        container_name: fatalerrorsqldb
+        ports: 
+        -  5432:5432
+        restart: always
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+               - ASPNETCORE_ENVIRONMENT= Production
+
+    fatalerrorrabbitmq:
+        image: rabbitmq:3.9-management
+        hostname: "rabbitmq"
+        container_name: fatalerrorrabbitmq
+        depends_on: [fatalerrordb]
+        environment:
+            ASPNETCORE_ENVIRONMENT: Production
+        links:
+          - fatalerrordb
+        ports:
+        - 5671:5671
+        - 5672:5672
+        - 15672:15672
+       
+    fatalerror.communication:
+         image: ${DOCKER_REGISTRY-}fatalerrorcommunication
+         environment:
+            - ASPNETCORE_ENVIRONMENT=Production
+         build:
+          context: .
+          dockerfile: FatalError.Communication/Dockerfile
+          args:
+            - ASPNETCORE_ENVIRONMENT=Production
+         depends_on: [fatalerrorredis,fatalerrordb,fatalerrorsqldb,fatalerrorrabbitmq]
+         ports:
+          - 44332:443    
+         links:
+          - fatalerrorredis 
+          - fatalerrordb
+          - fatalerrorsqldb
+          - fatalerrorrabbitmq
+       

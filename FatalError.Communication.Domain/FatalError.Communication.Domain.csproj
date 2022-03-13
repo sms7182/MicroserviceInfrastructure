@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FatalError.Communication.Contracts\FatalError.Communication.Contracts.csproj" />
+    <ProjectReference Include="..\FatalError.Core.DataAccess\FatalError.Core.DataAccess.csproj" />
+    <ProjectReference Include="..\FatalError.Core.Domain\FatalError.Core.Domain.csproj" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="MongoDB.Bson" Version="2.13.2" />
+		
+	</ItemGroup>
+</Project>

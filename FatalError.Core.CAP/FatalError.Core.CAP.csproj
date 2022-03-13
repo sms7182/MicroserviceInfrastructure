@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="DotNetCore.CAP" Version="5.1.2" />
+		<PackageReference Include="DotNetCore.CAP.InMemoryStorage" Version="5.1.2" />
+		<PackageReference Include="DotNetCore.CAP.MongoDB" Version="5.1.2" />
+		<PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="5.1.2" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\FatalError.Core.Contracts\FatalError.Core.Contracts.csproj" />
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	  <Exec Command="copy &quot;$(TargetPath)&quot; D:\FatalErrorDlls\" />
+	</Target>
+</Project>
